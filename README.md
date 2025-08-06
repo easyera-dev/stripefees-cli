@@ -26,6 +26,32 @@ A command-line tool to retrieve and display Stripe fees for a given charge ID.
    go build -o stripefees-cli main.go
    ```
 
+## Testing
+
+Run the test suite:
+
+```bash
+go test
+```
+
+Run tests with verbose output:
+
+```bash
+go test -v
+```
+
+Run benchmarks:
+
+```bash
+go test -bench=.
+```
+
+The test suite includes:
+- Unit tests for the `ChargeInfo` struct
+- Tests for amount formatting and display logic
+- Tests for fee details handling
+- Benchmarks for performance testing
+
 ## Configuration
 
 Set your Stripe secret key as an environment variable:
@@ -37,13 +63,21 @@ export STRIPE_SECRET_KEY="sk_test_your_stripe_secret_key_here"
 ## Usage
 
 ```bash
-./stripefees-cli -charge <charge_id>
+./stripefees-cli [-charge <charge_id>]
 ```
 
-### Example
+If no charge ID is provided, the tool will automatically use the latest charge from your Stripe account.
 
+### Examples
+
+With a specific charge ID:
 ```bash
 ./stripefees-cli -charge ch_1234567890abcdef
+```
+
+Using the latest charge:
+```bash
+./stripefees-cli
 ```
 
 Output:
@@ -60,14 +94,14 @@ Fee Breakdown:
 
 ## Parameters
 
-- `-charge`: Required. The Stripe charge ID to analyze (format: `ch_xxxxxx`)
+- `-charge`: Optional. The Stripe charge ID to analyze (format: `ch_xxxxxx`). If not provided, uses the latest charge.
 
 ## Error Handling
 
 The tool will exit with an error if:
-- No charge ID is provided
 - The `STRIPE_SECRET_KEY` environment variable is not set
 - The charge ID is invalid or not found
+- No charges exist in your Stripe account (when using default behavior)
 - There's an issue connecting to the Stripe API
 
 ## Dependencies
