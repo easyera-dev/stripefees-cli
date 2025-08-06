@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/stripe/stripe-go/v79"
 	"github.com/stripe/stripe-go/v79/balancetransaction"
 	"github.com/stripe/stripe-go/v79/charge"
@@ -88,6 +89,11 @@ func displayChargeInfo(info *ChargeInfo) {
 func main() {
 	chargeID := flag.String("charge", "", "Stripe charge ID (e.g., ch_123abc). If not provided, uses the latest charge.")
 	flag.Parse()
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Println("Warning: .env file not found, using system environment variables")
+	}
 
 	apiKey := os.Getenv("STRIPE_SECRET_KEY")
 	if apiKey == "" {

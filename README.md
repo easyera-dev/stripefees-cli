@@ -54,6 +54,20 @@ The test suite includes:
 
 ## Configuration
 
+### Option 1: Using .env file (Recommended)
+
+1. Copy the provided `.env` file and update it with your Stripe secret key:
+   ```bash
+   cp .env .env.local  # Optional: create a local copy
+   ```
+
+2. Edit the `.env` file and replace the placeholder with your actual Stripe secret key:
+   ```
+   STRIPE_SECRET_KEY=sk_test_your_actual_stripe_secret_key_here
+   ```
+
+### Option 2: Using environment variable
+
 Set your Stripe secret key as an environment variable:
 
 ```bash
